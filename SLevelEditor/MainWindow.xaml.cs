@@ -30,6 +30,10 @@ namespace SLevelEditor
         public static JArray challenge_array;
         private string roundPath;
         private string challengePath;
+        private List<string> challengesList = new List<string>();
+        private LevelEdit m_levelEdit;
+
+        public string m_selectedChallenge; // The selected challenge is decided by Selected Round
 
         public MainWindow()
         {
@@ -117,7 +121,7 @@ namespace SLevelEditor
                     {
                         if (prop.Name == "name")
                         {
-//                            Challenge_List.Items.Add(prop.Value.ToString());
+                            challengesList.Add(prop.Value.ToString());
                         }
                     }
                 }
@@ -127,24 +131,73 @@ namespace SLevelEditor
                 MessageBox.Show("Fail to read challenge info.");
                 return;
             }
-
+            cbLevels.SelectedIndex = 0;
             btnNew.IsEnabled = true;
             btnEdit.IsEnabled = true;
+
+            m_levelEdit = new LevelEdit();
+        }
+
+        public void showEditWindow(bool isEdit)
+        {
+            JObject obj = null;
+            if (isEdit) // Edit
+            {
+                for (int i = 0; i < round_array.Count; i++)
+                {
+                    JObject jOb = (JObject)round_array[i];
+                    foreach (JProperty prop in jOb.Properties())
+                    {
+                        if (prop.Name == "stageId" && int.Parse(prop.Value.ToString()) == cbLevels.SelectedIndex)
+                        {
+                            obj = jOb;
+                            break;
+                        }
+                    }
+                }
+
+                m_levelEdit.m_selectedRound = cbLevels.SelectedIndex;
+            }
+            else // New
+            {
+            }
+            m_levelEdit.initBoard(isEdit, obj, challengesList);
+            m_levelEdit.Show();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-
+            showEditWindow(true);
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-
+            showEditWindow(false);
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void cbLevels_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbLevels.SelectedIndex < 0) return;
+            JObject jOb = (JObject)round_array[cbLevels.SelectedIndex];
+            foreach (JProperty prop in jOb.Properties())
+            {
+                if (prop.Name == "gameParams")
+                {
+                    JObject jVal = (JObject)prop.Value;
+                    foreach (JProperty property in jVal.Properties())
+                    {
+                        if (property.Name == "challengeName")
+                        {
+                            m_selectedChallenge = property.Value.ToString();
+                        }
+                    }
+                }
+            }
         }
     }
 }

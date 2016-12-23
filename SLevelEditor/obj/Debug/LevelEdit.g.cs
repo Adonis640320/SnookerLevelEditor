@@ -296,46 +296,6 @@ namespace SLevelEditor {
         #line default
         #line hidden
         
-        
-        #line 62 "..\..\LevelEdit.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.GroupBox groupBox2;
-        
-        #line default
-        #line hidden
-        
-        
-        #line 63 "..\..\LevelEdit.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.TextBox txtPositionX;
-        
-        #line default
-        #line hidden
-        
-        
-        #line 64 "..\..\LevelEdit.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.Label label1;
-        
-        #line default
-        #line hidden
-        
-        
-        #line 65 "..\..\LevelEdit.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.TextBox txtPositionY;
-        
-        #line default
-        #line hidden
-        
-        
-        #line 66 "..\..\LevelEdit.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.Label label1_Copy;
-        
-        #line default
-        #line hidden
-        
         private bool _contentLoaded;
         
         /// <summary>
@@ -569,21 +529,6 @@ namespace SLevelEditor {
             
             #line default
             #line hidden
-            return;
-            case 33:
-            this.groupBox2 = ((System.Windows.Controls.GroupBox)(target));
-            return;
-            case 34:
-            this.txtPositionX = ((System.Windows.Controls.TextBox)(target));
-            return;
-            case 35:
-            this.label1 = ((System.Windows.Controls.Label)(target));
-            return;
-            case 36:
-            this.txtPositionY = ((System.Windows.Controls.TextBox)(target));
-            return;
-            case 37:
-            this.label1_Copy = ((System.Windows.Controls.Label)(target));
             return;
             }
             this._contentLoaded = true;

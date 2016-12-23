@@ -13,5 +13,6 @@ namespace SLevelEditor
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLevelEditor"
         mc:Ignorable="d"
-        Title="Level Edit" Height="600" Width="800">
-    <Grid>
+        Title="Level Edit" Height="644.038" Width="932.042" Topmost="True">
+    <Grid x:Name="gridTotal">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="label" Content="(0, 0)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <GroupBox x:Name="groupBox" Header="Balls" HorizontalAlignment="Left" Margin="9,465,0,0" VerticalAlignment="Top" Height="52" Width="464" RenderTransformOrigin="0.5,0.5">
+            <GroupBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.139"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.498"/>
+                </TransformGroup>
+            </GroupBox.RenderTransform>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="Point for Stars" HorizontalAlignment="Left" Margin="10,526,0,0" VerticalAlignment="Top" Height="57" Width="461">
+        </GroupBox>
+        <TextBox x:Name="txtOneStar" HorizontalAlignment="Left" Height="27" Margin="60,546,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Text="0"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="20" Margin="26,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <Image x:Name="image_Copy" HorizontalAlignment="Left" Height="20" Margin="142,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <Image x:Name="image_Copy1" HorizontalAlignment="Left" Height="20" Margin="168,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <Image x:Name="image_Copy2" HorizontalAlignment="Left" Height="20" Margin="299,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <Image x:Name="image_Copy3" HorizontalAlignment="Left" Height="20" Margin="325,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <Image x:Name="image_Copy4" HorizontalAlignment="Left" Height="20" Margin="351,546,0,0" VerticalAlignment="Top" Width="20" Source="resources/star.png" Stretch="Fill"/>
+        <TextBox x:Name="txtOneStar_Copy" HorizontalAlignment="Left" Height="27" Margin="206,546,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="txtOneStar_Copy1" HorizontalAlignment="Left" Height="27" Margin="398,546,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="60"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="724,558,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="825,558,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnMore" Content="MoreOptions" HorizontalAlignment="Left" Margin="491,485,0,0" VerticalAlignment="Top" Width="91"/>
+
+        <Canvas x:Name="canvasTable" HorizontalAlignment="Left" Height="450" Margin="10,10,0,0" VerticalAlignment="Top" Width="900" Background="#FF0B7001" MouseLeftButtonDown="canvasTable_MouseLeftButtonDown" MouseLeftButtonUp="canvasTable_MouseLeftButtonUp" MouseMove="canvasTable_MouseMove"/>
+
+        <Image x:Name="RedBall" HorizontalAlignment="Left" Height="25" Margin="26,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/red.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="21"/>
+        <Image x:Name="BlueBall" HorizontalAlignment="Left" Height="25" Margin="54,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/blue.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="22"/>
+        <Image x:Name="YellowBall" HorizontalAlignment="Left" Height="25" Margin="82,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/yellow.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="23"/>
+        <Image x:Name="BrownBall" HorizontalAlignment="Left" Height="25" Margin="110,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/brown.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="24"/>
+        <Image x:Name="PinkBall" HorizontalAlignment="Left" Height="25" Margin="138,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/pink.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="25"/>
+        <Image x:Name="GreenBall" HorizontalAlignment="Left" Height="25" Margin="166,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/lightblue.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="26"/>
+        <Image x:Name="BlackBall" HorizontalAlignment="Left" Height="25" Margin="194,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/black.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="27"/>
+        <Image x:Name="WhiteBall" HorizontalAlignment="Left" Height="25" Margin="223,485,0,0" VerticalAlignment="Top" Width="25" Source="resources/white.png" MouseLeftButtonDown="btnBall_MouseLeftButtonDown" Tag="27" Stretch="Fill"/>
+
+
+        <Label x:Name="btnAddRedBall" Content="Red" HorizontalAlignment="Left" Margin="26,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="11"/>
+        <Label x:Name="btnAddBlueBall" Content="Red" HorizontalAlignment="Left" Margin="54,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="12"/>
+        <Label x:Name="btnAddYellowBall" Content="Red" HorizontalAlignment="Left" Margin="82,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="13"/>
+        <Label x:Name="btnAddBrownBall" Content="Red" HorizontalAlignment="Left" Margin="110,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="14"/>
+        <Label x:Name="btnAddPinkBall" Content="Red" HorizontalAlignment="Left" Margin="138,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="15"/>
+        <Label x:Name="btnAddGreenBall" Content="Red" HorizontalAlignment="Left" Margin="166,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="16"/>
+        <Label x:Name="btnAddBlackBall" Content="Red" HorizontalAlignment="Left" Margin="194,485,0,0" VerticalAlignment="Top" Height="25" Width="25" MouseDoubleClick="btnAddBall_MouseDoubleClick" Tag="17"/>
         
     </Grid>
 </Window>
