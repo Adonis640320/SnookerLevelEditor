@@ -141,7 +141,8 @@ namespace SLevelEditor
         public void showEditWindow(bool isEdit)
         {
             JObject obj = null;
-            if (isEdit) // Edit
+
+            if (isEdit) // Round Edit
             {
                 for (int i = 0; i < round_array.Count; i++)
                 {
@@ -156,12 +157,31 @@ namespace SLevelEditor
                     }
                 }
 
-                m_levelEdit.m_selectedRound = cbLevels.SelectedIndex;
+                m_levelEdit.m_selectedRoundIndex = cbLevels.SelectedIndex;
             }
-            else // New
-            {
-            }
-            m_levelEdit.initBoard(isEdit, obj, challengesList);
+            m_levelEdit.initRoundInfo(isEdit, obj, challengesList);
+
+            obj = null;
+//            if (isEdit) // Challenge Edit
+ //           {
+                for (int i = 0; i < challenge_array.Count; i++)
+                {
+                    JObject jOb = (JObject)challenge_array[i];
+                    foreach (JProperty prop in jOb.Properties())
+                    {
+                        if (prop.Name == "name" && prop.Value.ToString() == m_selectedChallenge)
+                        {
+                            obj = jOb;
+                            m_levelEdit.m_selectedChallengeIndex = i;
+                            break;
+                        }
+                    }
+                }
+//            }
+
+            m_levelEdit.initChallengeInfo(true, obj);
+            m_levelEdit.initTableInfo();
+
             m_levelEdit.Show();
         }
 
@@ -177,7 +197,7 @@ namespace SLevelEditor
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Application.Current.Shutdown();
         }
 
         private void cbLevels_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -198,6 +218,30 @@ namespace SLevelEditor
                     }
                 }
             }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (JProperty item in ((JObject)round_json).Properties())
+            {
+                if (item.Name == "stages")
+                {
+                    item.Value = round_array;
+                }
+            }
+            string jsonString = JsonConvert.SerializeObject(round_json);
+            File.WriteAllText(roundPath, jsonString);
+
+            foreach (JProperty item in ((JObject)challenge_json).Properties())
+            {
+                if (item.Name == "challenges")
+                {
+                    item.Value = challenge_array;
+                }
+            }
+            jsonString = JsonConvert.SerializeObject(challenge_json);
+            File.WriteAllText(challengePath, jsonString);
+            MessageBox.Show("Game information saved successfully.");
         }
     }
 }
