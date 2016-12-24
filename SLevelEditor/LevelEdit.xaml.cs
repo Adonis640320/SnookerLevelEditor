@@ -44,7 +44,7 @@ namespace SLevelEditor
         public LevelEdit()
         {
             InitializeComponent();
-            m_selectedRoundIndex = -1;
+            m_selectedRoundIndex = 0;
             m_isEditMode = false;
             m_challengeName = "";
 
@@ -922,8 +922,9 @@ private Point getLocation(JObject obj)
         private void canvasTable_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var image = e.Source as Image;
-
+            
             if (image != null && canvasTable.CaptureMouse())
+//            if (canvasTable.CaptureMouse())
             {
                 m_mousePos = e.GetPosition(canvasTable);
                 m_draggedImage = image;
@@ -966,6 +967,20 @@ private Point getLocation(JObject obj)
             Canvas.SetLeft(image, 0);
             Canvas.SetTop(image, 0);
             canvasTable.Children.Add(image);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                if(m_draggedImage != null)
+                {
+                    m_ballsList.Remove(m_draggedImage);
+                    canvasTable.Children.Remove(m_draggedImage);
+                    m_draggedImage = null;
+                }
+                return;
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

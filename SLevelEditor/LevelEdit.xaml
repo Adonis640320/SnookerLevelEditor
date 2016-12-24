@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SLevelEditor"
         mc:Ignorable="d"
-        Title="Level Edit" Height="644.038" Width="932.042" Topmost="True">
+        Title="Level Edit" Height="644.038" Width="932.042" Topmost="True" KeyUp="Window_KeyUp">
     <Grid x:Name="gridTotal">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
