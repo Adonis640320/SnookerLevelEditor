@@ -36,7 +36,7 @@ namespace SLevelEditor
 
         private bool m_isMovingSampleBall { set; get; }
         private bool m_isEditMode;
-        private Image m_draggedImage, m_whiteBall;
+        private Image m_draggedImage, m_whiteBall, m_tempDraggingImage;
 
         private Point m_mousePos;
         private string m_challengeName;
@@ -938,6 +938,7 @@ private Point getLocation(JObject obj)
             {
                 canvasTable.ReleaseMouseCapture();
                 Panel.SetZIndex(m_draggedImage, 0);
+                m_tempDraggingImage = m_draggedImage;
                 m_draggedImage = null;
             }
         }
@@ -973,11 +974,11 @@ private Point getLocation(JObject obj)
         {
             if(e.Key == Key.Delete)
             {
-                if(m_draggedImage != null)
+                if(m_tempDraggingImage != null)
                 {
-                    m_ballsList.Remove(m_draggedImage);
-                    canvasTable.Children.Remove(m_draggedImage);
-                    m_draggedImage = null;
+                    m_ballsList.Remove(m_tempDraggingImage);
+                    canvasTable.Children.Remove(m_tempDraggingImage);
+                    m_tempDraggingImage = null;
                 }
                 return;
             }
