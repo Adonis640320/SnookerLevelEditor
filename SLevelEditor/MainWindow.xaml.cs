@@ -32,7 +32,7 @@ namespace SLevelEditor
         private string challengePath;
         private List<string> challengesList = new List<string>();
         private LevelEdit m_levelEdit;
-
+        private bool m_isNewPressed = false;
         public string m_selectedChallenge; // The selected challenge is decided by Selected Round
 
         public MainWindow()
@@ -134,12 +134,17 @@ namespace SLevelEditor
             cbLevels.SelectedIndex = 0;
             btnNew.IsEnabled = true;
             btnEdit.IsEnabled = true;
-
-            m_levelEdit = new LevelEdit();
+            btnDelete.IsEnabled = true;
+            
         }
 
         public void showEditWindow(bool isEdit)
         {
+            if (m_levelEdit != null)
+                m_levelEdit = null;
+            m_levelEdit = new LevelEdit();
+            m_isNewPressed = !isEdit;
+
             JObject obj = null;
 
             if (isEdit) // Round Edit
@@ -159,11 +164,16 @@ namespace SLevelEditor
 
                 m_levelEdit.m_selectedRoundIndex = cbLevels.SelectedIndex;
             }
+            else
+            {
+                m_levelEdit.m_selectedRoundIndex = -1;
+            }
+
             m_levelEdit.initRoundInfo(isEdit, obj, challengesList);
 
             obj = null;
-//            if (isEdit) // Challenge Edit
- //           {
+            if (isEdit) // Challenge Edit
+            {
                 for (int i = 0; i < challenge_array.Count; i++)
                 {
                     JObject jOb = (JObject)challenge_array[i];
@@ -177,10 +187,11 @@ namespace SLevelEditor
                         }
                     }
                 }
-//            }
+            }
 
-            m_levelEdit.initChallengeInfo(true, obj);
-            m_levelEdit.initTableInfo();
+            m_levelEdit.initChallengeInfo(isEdit, obj);
+
+            m_levelEdit.initTableInfo(isEdit);
 
             m_levelEdit.Show();
         }
@@ -242,6 +253,69 @@ namespace SLevelEditor
             jsonString = JsonConvert.SerializeObject(challenge_json);
             File.WriteAllText(challengePath, jsonString);
             MessageBox.Show("Game information saved successfully.");
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var confirmResult = MessageBox.Show("Are you sure to delete this item ??", "Confirm Delete!!", MessageBoxButton.YesNo);
+            
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                if (round_array == null) return;
+                // If 'Yes', do something here.
+                round_array.RemoveAt(cbLevels.SelectedIndex);
+                cbLevels.Items.RemoveAt(cbLevels.SelectedIndex);
+            }
+            else
+            {
+                // If 'No', do something here.
+            }
+
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            cbLevels.Items.Clear();
+            if ( round_array == null) return;
+
+            for (int i = 0; i < round_array.Count; i++)
+            {
+                JObject jOb = (JObject)round_array[i];
+                foreach (JProperty prop in jOb.Properties())
+                {
+                    if (prop.Name == "stageId")
+                    {
+                        cbLevels.Items.Add(((int)prop.Value + 1).ToString());
+                    }
+                }
+            }
+            if (cbLevels.Items.Count > 0)
+            {
+
+                cbLevels.Items.Clear();
+                for (int i = 0; i < round_array.Count; i++)
+                {
+                    JObject jOb = (JObject)round_array[i];
+                    foreach (JProperty prop in jOb.Properties())
+                    {
+                        if (prop.Name == "stageId")
+                        {
+                            cbLevels.Items.Add(((int)prop.Value + 1).ToString());
+                        }
+                    }
+                }
+
+                if ( m_isNewPressed)
+                {
+                    cbLevels.SelectedIndex = cbLevels.Items.Count - 1;
+                    m_isNewPressed = false;
+                }
+                else
+                {
+                    cbLevels.SelectedIndex = 0;
+                }
+
+            }
         }
     }
 }

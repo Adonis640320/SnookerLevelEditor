@@ -30,10 +30,6 @@ namespace SLevelEditor
 
         private List<Image> m_ballsList = new List<Image>();
 
-        /*private int m_pressType = 0;
-        private int m_selectedBallType = 4;
-        private Point pressedPosition = new Point(0, 0);*/
-
         private bool m_isMovingSampleBall { set; get; }
         private bool m_isEditMode;
         private Image m_draggedImage, m_whiteBall, m_tempDraggingImage;
@@ -44,7 +40,8 @@ namespace SLevelEditor
         public LevelEdit()
         {
             InitializeComponent();
-            m_selectedRoundIndex = 0;
+            m_selectedRoundIndex = -1;
+            m_selectedChallengeIndex = -1;
             m_isEditMode = false;
             m_challengeName = "";
 
@@ -124,7 +121,7 @@ namespace SLevelEditor
                         {
                             if (gpProp.Name == "challengeName")
                             {
-                                m_challengeName = "1";
+                                m_challengeName = challengesList[0];
 //                                challenge_name_combobox.SelectedIndex = 0;
                             }
                             /*else if (gpProp.Name == "pointDifferenceOneStars")
@@ -270,7 +267,7 @@ namespace SLevelEditor
                     {
                         min_avg_difference_value.Text = prop.Value.ToString();
                     }
-                    else */if (prop.Name == "gameParams")
+                    else */else if (prop.Name == "gameParams")
                     {
                         JObject gpObj = (JObject)prop.Value;
                         foreach (JProperty gpProp in gpObj.Properties())
@@ -398,8 +395,8 @@ namespace SLevelEditor
                         }
                     }
                 }
-//                opponents_array = new JArray();
-//                challenges_array = new JArray();
+//              opponents_array = new JArray();
+//              challenges_array = new JArray();
                 balls_array = new JArray();
             }
             else // Edit
@@ -522,8 +519,7 @@ namespace SLevelEditor
                     {
                         cueBall = new JObject((JObject)prop.Value);
                     }
-                    else
-                    if (prop.Name == "balls")
+                    else if (prop.Name == "balls")
                     {
                         balls_array = new JArray((JArray)prop.Value);
                     }
@@ -532,26 +528,33 @@ namespace SLevelEditor
 
         }
 
-        public void initTableInfo()
+        public void initTableInfo(bool isEdit)
         {
+            canvasTable.Children.Clear();
+            canvasTable.Children.Add(m_whiteBall);
+            if (!isEdit) // New
+            {
+                balls_array.Clear();
+            }
+
             foreach (JProperty prop in cueBall.Properties())
             {
                 if (prop.Name == "position")
                 {
                     Canvas.SetLeft(m_whiteBall, getLocation((JObject)prop.Value).X);
                     Canvas.SetTop(m_whiteBall, getLocation((JObject)prop.Value).Y);
-                    
+
                 }
                 else if (prop.Name == "type")
                 {
-                    //m_whiteBall.Name = prop.Value.ToString();
                     m_whiteBall.Tag = prop.Value.ToString();
                 }
             }
+
             for (int i = 0; i < balls_array.Count; i++)
             {
                 JObject obj = (JObject)balls_array[i];
-                Image ballImage = new Image() { Width = 15, Height = 15};
+                Image ballImage = new Image() { Width = 15, Height = 15 };
                 foreach (JProperty prop in obj.Properties())
                 {
                     if (prop.Name == "position")
@@ -562,13 +565,48 @@ namespace SLevelEditor
                     else if (prop.Name == "type")
                     {
                         ballImage.Source = getImageFromType((int)prop.Value);
-                        //ballImage.Name = prop.Value.ToString();
                         ballImage.Tag = prop.Value.ToString();
                         m_ballsList.Add(ballImage);
                         canvasTable.Children.Add(ballImage);
                     }
                 }
             }
+        }
+
+        private string getBallTypeFromName(string ballName )
+        {
+            int type = 0;
+            switch (ballName)
+            {
+                case "NoBall":
+                    type = 0;
+                    break;
+                case "WhiteBall":
+                    type = 3;
+                    break;
+                case "RedBall":
+                    type = 4;
+                    break;
+                case "YellowBall":
+                    type = 5;
+                    break;
+                case "GreenBall":
+                    type = 6;
+                    break;
+                case "BrownBall":
+                    type = 7;
+                    break;
+                case "BlueBall":
+                    type = 8;
+                    break;
+                case "PinkBall":
+                    type = 9;
+                    break;
+                case "BlackBall":
+                    type = 10;
+                    break;
+            }
+            return type.ToString();
         }
 
         private ImageSource getImageFromType(int type)
@@ -613,7 +651,7 @@ namespace SLevelEditor
             return ball.Source;
         }
 
-private Point getLocation(JObject obj)
+        private Point getLocation(JObject obj)
         {
             Point point = new Point(0, 0);
             foreach (JProperty prop in obj.Properties())
@@ -774,7 +812,7 @@ private Point getLocation(JObject obj)
                         if (posProp.Name == "x")
                             posProp.Value = float.Parse(txtPositionX.Text);
                         else if (posProp.Name == "y")
-                            posProp.Value = float.Parse(txtPositionX.Text);
+                            posProp.Value = float.Parse(txtPositionY.Text);
                     }
                 }
 /*                else if (prop.Name == "description")
@@ -924,7 +962,6 @@ private Point getLocation(JObject obj)
             var image = e.Source as Image;
             
             if (image != null && canvasTable.CaptureMouse())
-//            if (canvasTable.CaptureMouse())
             {
                 m_mousePos = e.GetPosition(canvasTable);
                 m_draggedImage = image;
@@ -965,9 +1002,11 @@ private Point getLocation(JObject obj)
             Label btnBall = sender as Label;
             Image btnImage = (Image)FindName(btnBall.Name.Remove(0, 6));
             Image image = new Image() { Source = ((Image)btnImage).Source, Width =15, Height=15 };
+            image.Tag = getBallTypeFromName(btnBall.Name.Remove(0, 6)) ;
             Canvas.SetLeft(image, 0);
             Canvas.SetTop(image, 0);
             canvasTable.Children.Add(image);
+            m_ballsList.Add(image);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -992,8 +1031,6 @@ private Point getLocation(JObject obj)
             {
                 balls_array.Add(new JObject(cueBall));
             }
-            
-            
 
             savePositionFromJsonToJObject(cueBall, new Point() { X = Canvas.GetLeft(m_whiteBall), Y = Canvas.GetTop(m_whiteBall) }, int.Parse((string)m_whiteBall.Tag));
 
@@ -1034,7 +1071,7 @@ private Point getLocation(JObject obj)
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            Close();
         }
 
         private void savePositionFromJsonToJObject(JObject obj, Point position, int type)
