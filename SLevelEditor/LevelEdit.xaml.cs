@@ -121,7 +121,11 @@ namespace SLevelEditor
                         {
                             if (gpProp.Name == "challengeName")
                             {
-                                m_challengeName = challengesList[0];
+                                Random random = new Random();
+                                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                                string suffix = new string(Enumerable.Repeat(chars, 5)
+                                  .Select(s => s[random.Next(s.Length)]).ToArray());
+                                m_challengeName = challengesList[0] + suffix;
 //                                challenge_name_combobox.SelectedIndex = 0;
                             }
                             /*else if (gpProp.Name == "pointDifferenceOneStars")
@@ -280,6 +284,7 @@ namespace SLevelEditor
                                     if (challengesList[i].ToString() == gpProp.Value.ToString())
                                         break;
                                 }
+
                                 m_challengeName = challengesList[i];
                                 //challenge_name_combobox.SelectedIndex = i;
                             }
@@ -379,7 +384,12 @@ namespace SLevelEditor
                     {
                         num_rewinds_value.Text = "0";
                     }
-                    else*/ if (prop.Name == "cueBall")
+                    else*/
+                    if (prop.Name == "challengeName")
+                    {
+                        prop.Value = m_challengeName;
+                    }
+                    else if (prop.Name == "cueBall")
                     {
                         cueBall = new JObject((JObject)prop.Value);
                         foreach (JProperty property in cueBall.Properties())
@@ -704,15 +714,16 @@ namespace SLevelEditor
         {
             foreach (JProperty prop in m_currentChallenge.Properties())
             {
-/*                if (prop.Name == "name")
+            if (prop.Name == "name")
                 {
-                    prop.Value = name_value.Text;
+                    prop.Value = m_challengeName;
                 }
-                else if (prop.Name == "aimLengthMult")
-                {
-                    prop.Value = int.Parse(aim_length_value.Text);
-                }
-                else */if (prop.Name == "cueBall")
+                /*                else if (prop.Name == "aimLengthMult")
+                                {
+                                    prop.Value = int.Parse(aim_length_value.Text);
+                                }
+                                else */
+                if (prop.Name == "cueBall")
                 {
                     prop.Value = cueBall;
                 }
@@ -755,11 +766,11 @@ namespace SLevelEditor
                 else if (prop.Name == "shotsTillSpinDisappear")
                 {
                     prop.Value = int.Parse(shots_till_spin_disappear_value.Text);
-                }
+                }*/
                 else if (prop.Name == "challengeName")
                 {
-                    prop.Value = challenge_name_value.Text;
-                }
+                    prop.Value = m_challengeName;
+                }/*
                 else if (prop.Name == "introDescription")
                 {
                     prop.Value = description_value.Text;
@@ -895,11 +906,11 @@ namespace SLevelEditor
                     JObject gpObj = (JObject)prop.Value;
                     foreach (JProperty gpProp in gpObj.Properties())
                     {
-/*                        if (gpProp.Name == "challengeName")
+                        if (gpProp.Name == "challengeName")
                         {
-                            gpProp.Value = challenge_name_combobox.SelectedItem.ToString();
+                            gpProp.Value = m_challengeName;
                         }
-                        else if (gpProp.Name == "pointDifferenceOneStars")
+/*                       else if (gpProp.Name == "pointDifferenceOneStars")
                         {
                             gpProp.Value = int.Parse(one_stars_value.Text);
                         }
@@ -911,7 +922,8 @@ namespace SLevelEditor
                         {
                             gpProp.Value = int.Parse(three_stars_value.Text);
                         }
-                        else */if (gpProp.Name == "coins1Star")
+                        else */
+                        if (gpProp.Name == "coins1Star")
                         {
                             gpProp.Value = int.Parse(txtOneStar.Text);
                         }
@@ -1056,15 +1068,13 @@ namespace SLevelEditor
                     }
                 }
                 MainWindow.round_array.Add(m_currentRound);
+                MainWindow.challenge_array.Add(m_currentChallenge);
             }
             else // Edit
             {
                 MainWindow.round_array[m_selectedRoundIndex] = m_currentRound;
-                //MainWindow.challenge_array[m_selectedChallengeIndex] = m_currentChallenge;
+                MainWindow.challenge_array[m_selectedChallengeIndex] = m_currentChallenge;
             }
-
-            // Challenge Info
-            MainWindow.challenge_array[m_selectedChallengeIndex] = m_currentChallenge;
 
             Close();
         }

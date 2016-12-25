@@ -166,7 +166,7 @@ namespace SLevelEditor
             }
             else
             {
-                m_levelEdit.m_selectedRoundIndex = cbLevels.Items.Count - 1;
+                m_levelEdit.m_selectedRoundIndex = cbLevels.Items.Count;
             }
 
             m_levelEdit.initRoundInfo(isEdit, obj, challengesList);
@@ -190,7 +190,7 @@ namespace SLevelEditor
             }
             else
             {
-                m_levelEdit.m_selectedChallengeIndex = challenge_array.Count - 1;
+                m_levelEdit.m_selectedChallengeIndex = challenge_array.Count;
             }
 
             m_levelEdit.initChallengeInfo(isEdit, obj);
@@ -269,6 +269,7 @@ namespace SLevelEditor
             {
                 if (round_array == null) return;
                 // If 'Yes', do something here.
+                int tempIndex = cbLevels.SelectedIndex;
                 round_array.RemoveAt(m_selectedRoundId);
                 cbLevels.Items.Clear();
                 for (int i = 0; i < round_array.Count; i++)
@@ -282,6 +283,7 @@ namespace SLevelEditor
                         }
                     }
                 }
+                cbLevels.SelectedIndex = tempIndex;
             }
             else
             {
@@ -294,6 +296,22 @@ namespace SLevelEditor
         {
             
             if ( round_array == null) return;
+
+            if (challenge_array == null) return;
+            for (int i = 0; i < challenge_array.Count; i++)
+            {
+                JObject jOb = (JObject)challenge_array[i];
+                foreach (JProperty prop in jOb.Properties())
+                {
+                    if (prop.Name == "name")
+                    {
+                        challengesList.Add(prop.Value.ToString());
+                    }
+                }
+            }
+
+
+            int tempIndex = cbLevels.SelectedIndex;
 
             cbLevels.Items.Clear();
             for (int i = 0; i < round_array.Count; i++)
@@ -308,14 +326,12 @@ namespace SLevelEditor
                 }
             }
 
+            cbLevels.SelectedIndex = tempIndex;
+
             if ( m_isNewPressed)
             {
                 cbLevels.SelectedIndex = cbLevels.Items.Count - 1;
                 m_isNewPressed = false;
-            }
-            else
-            {
-                cbLevels.SelectedIndex = 0;
             }
                 
         }
