@@ -1,0 +1,17 @@
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\bin\Release\SLevelEditor.exe.config
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\bin\Release\SLevelEditor.exe
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\bin\Release\SLevelEditor.pdb
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\bin\Release\Newtonsoft.Json.dll
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.csprojResolveAssemblyReference.cache
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\LevelEdit.g.cs
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\MainWindow.g.cs
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\App.g.cs
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor_MarkupCompile.cache
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor_MarkupCompile.lref
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\LevelEdit.baml
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\MainWindow.baml
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.g.resources
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.Properties.Resources.resources
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.csproj.GenerateResource.Cache
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.exe
+E:\Tasks\Snooker\SSLevelEditor(Lite)\SLevelEditor\obj\Release\SLevelEditor.pdb

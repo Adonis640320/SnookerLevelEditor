@@ -13,7 +13,7 @@
         <ComboBox x:Name="cbLevels" HorizontalAlignment="Left" Margin="17,124,0,0" VerticalAlignment="Top" Width="278" SelectionChanged="cbLevels_SelectionChanged"/>
         <Label x:Name="label" Content="Select level to edit" HorizontalAlignment="Left" Margin="17,83,0,0" VerticalAlignment="Top" Width="278"/>
         <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="17,160,0,0" VerticalAlignment="Top" Width="74" Click="btnNew_Click" IsEnabled="False"/>
-        <Button x:Name="btnSave" Content="Save to File" HorizontalAlignment="Left" Margin="49,203,0,0" VerticalAlignment="Top" Width="74" Click="btnSave_Click"/>
+        <Button x:Name="btnSave" Content="Save to File" HorizontalAlignment="Left" Margin="49,203,0,0" VerticalAlignment="Top" Width="74" Click="btnSave_Click" IsEnabled="False"/>
         <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="220,160,0,0" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" IsEnabled="False"/>
 
     </Grid>

@@ -1066,7 +1066,7 @@ namespace SLevelEditor
             // Challenge Info
             MainWindow.challenge_array[m_selectedChallengeIndex] = m_currentChallenge;
 
-            Hide();
+            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

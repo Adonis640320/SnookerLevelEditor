@@ -34,7 +34,7 @@ namespace SLevelEditor
         private LevelEdit m_levelEdit;
         private bool m_isNewPressed = false;
         public string m_selectedChallenge; // The selected challenge is decided by Selected Round
-
+        private int m_selectedRoundId = -1;
         public MainWindow()
         {
             InitializeComponent();
@@ -135,7 +135,7 @@ namespace SLevelEditor
             btnNew.IsEnabled = true;
             btnEdit.IsEnabled = true;
             btnDelete.IsEnabled = true;
-            
+            btnSave.IsEnabled = true;
         }
 
         public void showEditWindow(bool isEdit)
@@ -166,7 +166,7 @@ namespace SLevelEditor
             }
             else
             {
-                m_levelEdit.m_selectedRoundIndex = -1;
+                m_levelEdit.m_selectedRoundIndex = cbLevels.Items.Count - 1;
             }
 
             m_levelEdit.initRoundInfo(isEdit, obj, challengesList);
@@ -187,6 +187,10 @@ namespace SLevelEditor
                         }
                     }
                 }
+            }
+            else
+            {
+                m_levelEdit.m_selectedChallengeIndex = challenge_array.Count - 1;
             }
 
             m_levelEdit.initChallengeInfo(isEdit, obj);
@@ -229,6 +233,8 @@ namespace SLevelEditor
                     }
                 }
             }
+
+            m_selectedRoundId = cbLevels.SelectedIndex;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -263,35 +269,7 @@ namespace SLevelEditor
             {
                 if (round_array == null) return;
                 // If 'Yes', do something here.
-                round_array.RemoveAt(cbLevels.SelectedIndex);
-                cbLevels.Items.RemoveAt(cbLevels.SelectedIndex);
-            }
-            else
-            {
-                // If 'No', do something here.
-            }
-
-        }
-
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            cbLevels.Items.Clear();
-            if ( round_array == null) return;
-
-            for (int i = 0; i < round_array.Count; i++)
-            {
-                JObject jOb = (JObject)round_array[i];
-                foreach (JProperty prop in jOb.Properties())
-                {
-                    if (prop.Name == "stageId")
-                    {
-                        cbLevels.Items.Add(((int)prop.Value + 1).ToString());
-                    }
-                }
-            }
-            if (cbLevels.Items.Count > 0)
-            {
-
+                round_array.RemoveAt(m_selectedRoundId);
                 cbLevels.Items.Clear();
                 for (int i = 0; i < round_array.Count; i++)
                 {
@@ -304,18 +282,42 @@ namespace SLevelEditor
                         }
                     }
                 }
-
-                if ( m_isNewPressed)
-                {
-                    cbLevels.SelectedIndex = cbLevels.Items.Count - 1;
-                    m_isNewPressed = false;
-                }
-                else
-                {
-                    cbLevels.SelectedIndex = 0;
-                }
-
             }
+            else
+            {
+                // If 'No', do something here.
+            }
+
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            
+            if ( round_array == null) return;
+
+            cbLevels.Items.Clear();
+            for (int i = 0; i < round_array.Count; i++)
+            {
+                JObject jOb = (JObject)round_array[i];
+                foreach (JProperty prop in jOb.Properties())
+                {
+                    if (prop.Name == "stageId")
+                    {
+                        cbLevels.Items.Add(((int)prop.Value + 1).ToString());
+                    }
+                }
+            }
+
+            if ( m_isNewPressed)
+            {
+                cbLevels.SelectedIndex = cbLevels.Items.Count - 1;
+                m_isNewPressed = false;
+            }
+            else
+            {
+                cbLevels.SelectedIndex = 0;
+            }
+                
         }
     }
 }
