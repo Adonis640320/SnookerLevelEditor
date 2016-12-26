@@ -46,7 +46,7 @@ namespace SLevelEditor
             m_challengeName = "";
 
             Image whiteBall = (Image)FindName("WhiteBall");
-            m_whiteBall = new Image() { Source = ((Image)whiteBall).Source, Width = 15, Height = 15 };
+            m_whiteBall = new Image() { Source = ((Image)whiteBall).Source, Width = 20 , Height = 20 };
             canvasTable.Children.Add(m_whiteBall);
         }
 
@@ -564,7 +564,7 @@ namespace SLevelEditor
             for (int i = 0; i < balls_array.Count; i++)
             {
                 JObject obj = (JObject)balls_array[i];
-                Image ballImage = new Image() { Width = 15, Height = 15 };
+                Image ballImage = new Image() { Width = 20, Height = 20 };
                 foreach (JProperty prop in obj.Properties())
                 {
                     if (prop.Name == "position")
@@ -1013,7 +1013,7 @@ namespace SLevelEditor
         {
             Label btnBall = sender as Label;
             Image btnImage = (Image)FindName(btnBall.Name.Remove(0, 6));
-            Image image = new Image() { Source = ((Image)btnImage).Source, Width =15, Height=15 };
+            Image image = new Image() { Source = ((Image)btnImage).Source, Width =20, Height=20 };
             image.Tag = getBallTypeFromName(btnBall.Name.Remove(0, 6)) ;
             Canvas.SetLeft(image, 0);
             Canvas.SetTop(image, 0);
